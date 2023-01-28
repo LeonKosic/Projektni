@@ -4,6 +4,7 @@ namespace Graph {
 	private:
 	public:
 		T calculate() const override {
+			if (empty())throw std::exception("Nema validnih operanada za izvrsavanje operacije");
 			try {
 				T res(operands[0]);
 				for (int i = 1; i < operands.size(); i++) {

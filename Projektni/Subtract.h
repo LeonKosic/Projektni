@@ -4,6 +4,8 @@ namespace Graph {
 	template<typename T> class Subtract :Operation<T> {
 	public:
 		T calculate() const override {
+
+			if (empty())throw std::exception("Nema validnih operanada za izvrsavanje operacije");
 			try {
 				T res(operands[0]);
 				for (int i = 1; i < operands.size(); i++) {
