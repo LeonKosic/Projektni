@@ -16,6 +16,9 @@ namespace Graph {
 			addOperand(el);
 			el->add(getPtr());
 		}
+		virtual T getResult() const override {
+			return calculate();
+		}
 	};
 
 }
