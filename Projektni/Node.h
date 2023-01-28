@@ -18,5 +18,14 @@ namespace Graph {
 			operators.push_back(el);
 		}
 	};
-
+	template<typename T> std::ostream& operator<<(std::ofstream& ofs, const T& a) {
+		for (int i = 0; i < a.size(); i++) {
+			ofs << a[i] << ' ';
+		}
+	}
+	template<typename T> std::istream& operator>>(std::ifstream& ofs, T& a) {
+		for (int i = 0; i < a.size(); i++) {
+			ofs >> a[i]; //TODO : concepts da bi radilo
+		}
+	}
 }
