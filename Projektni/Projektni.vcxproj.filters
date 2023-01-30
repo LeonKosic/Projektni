@@ -45,6 +45,9 @@
     <ClInclude Include="Leaf.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Tensor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Projektni.cpp">

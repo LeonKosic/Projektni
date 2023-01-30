@@ -14,5 +14,5 @@
 #include "Graph.h"
 #include "Multiply.h"
 #include "Subtract.h"
-
+#include "Tensor.h"
 #endif //PCH_H
