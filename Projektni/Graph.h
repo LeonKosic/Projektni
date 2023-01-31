@@ -9,7 +9,7 @@ namespace Graph  {
 	public:
 		T& operator[](size_t index) {
 			if (index >= size())throw std::exception("Index out of bounds");
-			return nodes[index];//
+			return nodes[index];
 		}
 		size_t size() const {
 			return nodes.size();

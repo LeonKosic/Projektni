@@ -140,6 +140,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Addition.h" />
     <ClInclude Include="Concepts.h" />
     <ClInclude Include="Custom.h" />
     <ClInclude Include="CustomUnary.h" />
