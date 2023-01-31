@@ -14,7 +14,7 @@ namespace Graph {
 		}
 		virtual void add(ptr<Node<T>>& el) override {
 			addOperand(el);
-			el->add(Node<T>::getPtr());
+			el->addOperator(Node<T>::getPtr());
 		}
 		virtual T getResult() const override {
 			return calculate();
