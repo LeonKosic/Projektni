@@ -10,6 +10,9 @@ namespace Graph {
 		virtual T getResult() const {
 			return value;
 		}
+		requires Assignable void setValue(const T& val) {
+			value = val;
+		}
 	};
 
 }

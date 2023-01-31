@@ -40,7 +40,7 @@ namespace Graph  {
 		T getResult(size_t from) {
 			return nodes[from]->getResult();
 		}
-		T getResult(ptr<Note<T>> start) const {
+		T getResult(ptr<Node<T>> start) const {
 			return getResult(find(start));
 		}
 	};

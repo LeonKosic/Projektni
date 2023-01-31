@@ -11,4 +11,9 @@ namespace Graph {
     concept Collection = requires(const T & b,decltype(T()[0]) a) {
         b[0];
     };
+
+    template <typename T>
+    concept Assignable = requires(T & a, const T & b) {
+        {a = b}-> std::convertible_to<T>;
+    };
 }
