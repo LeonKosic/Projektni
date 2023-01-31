@@ -51,6 +51,12 @@
     <ClInclude Include="Concepts.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Custom.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CustomUnary.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Projektni.cpp">
