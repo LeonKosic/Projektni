@@ -5,12 +5,12 @@ namespace Graph {
 	public:
 		T calculate() const override {
 
-			if (empty())throw std::exception("Nema validnih operanada za izvrsavanje operacije");
+			if (Operation<T>::empty())throw std::exception("Nema validnih operanada za izvrsavanje operacije");
 			try {
-				T res(operands[0]);
-				for (int i = 1; i < operands.size(); i++) {
+				T res(Operation<T>::operands[0]);
+				for (int i = 1; i < Operation<T>::size(); i++) {
 					for (int j = 0; j < res.size(); j++) {
-						res[j] -= operands[i][j];
+						res[j] -= Operation<T>::operands[i][j];
 					}
 				}
 				return res;

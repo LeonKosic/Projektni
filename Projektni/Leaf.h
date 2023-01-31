@@ -6,7 +6,7 @@ namespace Graph {
 	private:
 		T value;
 	public:
-		Leaf(T val) :val(T);
+		Leaf(T val) :value(val){}
 		virtual T getResult() const {
 			return value;
 		}
