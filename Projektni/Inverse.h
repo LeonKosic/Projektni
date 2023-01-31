@@ -6,7 +6,7 @@ namespace Graph {
 		T calculate() const override {
 			if (Operation<T>::empty())throw std::exception("Nema validnih operanada za izvrsavanje operacije");
 			try {
-				T res(Operation<T>::operands[0]);
+				T res(Operation<T>::operands[0]->getResult());
 				for (int i = 0; i < res.size(); i++) {
 					res[j] = -res[j];
 				}

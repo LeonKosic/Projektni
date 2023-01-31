@@ -9,9 +9,9 @@ namespace Graph {
 		T calculate() const override {
 			if (Operation<T>::empty())throw std::exception("Nema validnih operanada za izvrsavanje operacije");
 			try {
-				T res(Operation<T>::operands[0]);
+				T res(Operation<T>::operands[0]->getResult());
 				for (int i = 1; i < Operation<T>::size(); i++) {
-					res = f(res,Operation<T>::operands[i]);
+					res = f(res,Operation<T>::operands[i]->getResult());
 				}
 				return res;
 			}

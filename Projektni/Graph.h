@@ -22,7 +22,7 @@ namespace Graph  {
 			nodes.push_back(el);
 			return 0;
 		}
-		size_t find(const ptr<Node<T>>& el) {
+		size_t find(const ptr<Node<T>>& el) const{
 			for (size_t i = 0; i < size(); i++) {
 				if (el == nodes[i])return i;//inshallah je dobar equality operator za shared_ptr
 			}
@@ -36,6 +36,12 @@ namespace Graph  {
 		}
 		void addPath(ptr<Node<T>> from, ptr<Node<T>> to) {
 			addPath(find(from), find(to));
+		}
+		T getResult(size_t from) {
+			return nodes[from]->getResult();
+		}
+		T getResult(ptr<Note<T>> start) const {
+			return getResult(find(start));
 		}
 	};
 	
