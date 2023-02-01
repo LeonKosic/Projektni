@@ -4,13 +4,10 @@
 #include "Concepts.h"
 #include "Pointer.h"
 namespace Graph {
-	template<typename T> class Node : std::enable_shared_from_this<Node<T>> {
+	template<typename T> class Node  {
 	protected:
 		std::vector<ptr<Node>> operators; // u sta se racuna
 	public:
-		ptr<Node<T>> getPtr() {
-			return std::enable_shared_from_this<Node<T>>::shared_from_this(); //NOTE mzd moram derivirati
-		}
 		virtual T getResult() const = 0;
 		virtual void add(ptr<Node>& el) {
 			addOperator(el);

@@ -27,11 +27,14 @@ namespace Graph  {
 		}
 		void addNode(ptr<Node<T>> el) {
 			nodes.push_back(el);
-			return 0;
+		}
+		void addNode(const Operation<T>& el) {
+			ptr<Node<T>> val = std::make_shared<Operation<T> >(el);
+			addNode(val);
 		}
 		void addNode(const T& el) {
 			ptr<Node<T>> val=std::make_shared<Leaf<T>>(el);
-			nodes.push_back(val);
+			addNode(val);
 		}
 		size_t find(const ptr<Node<T>>& el) const{
 			for (size_t i = 0; i < size(); i++) {
@@ -39,7 +42,7 @@ namespace Graph  {
 			}
 		}
 		void addPath(size_t from, size_t to) {
-			nodes[to]->add(from);
+			nodes[to]->add(nodes[from]);
 			/*
 			* pretpostavlja se da korisnik povezuje vezu OD tensora DO operacije, 
 			* u klasi sam obrnuto implementirao zbog laksih operacija

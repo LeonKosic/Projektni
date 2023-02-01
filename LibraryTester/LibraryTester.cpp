@@ -25,8 +25,9 @@ int main()
     g.addNode(t3);
     g.addNode(t4); 
     g.addNode(t5);
-    
-
+    Graph::Multiply<tens> mul;
+    g.addNode(std::make_shared<decltype(mul)>(mul));
+    g.addPath(0, 5);
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu

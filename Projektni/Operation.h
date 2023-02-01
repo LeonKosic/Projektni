@@ -9,12 +9,15 @@ namespace Graph {
 		virtual void addOperand(const ptr<Node<T>>& el) {
 			operands.push_back(el);
 		}
-		bool empty() {
+		size_t size() const {
+			return operands.size();
+		}
+		bool empty() const{
 			return operands.size() == 0;
 		}
 		virtual void add(ptr<Node<T>>& el) override {
 			addOperand(el);
-			el->addOperator(Node<T>::getPtr());
+			//el->addOperator(Node<T>::getPtr());
 		}
 		virtual T getResult() const override {
 			return calculate();
