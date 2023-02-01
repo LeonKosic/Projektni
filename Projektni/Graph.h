@@ -8,6 +8,7 @@
 #include "Multiply.h"
 #include "AddScalar.h"
 #include "MultiplyScalar.h"
+#include "Leaf.h"
 namespace Graph  {
 	template<Collection T> class Graph {
 	private:
@@ -27,6 +28,10 @@ namespace Graph  {
 		void addNode(ptr<Node<T>> el) {
 			nodes.push_back(el);
 			return 0;
+		}
+		void addNode(const T& el) {
+			ptr<Node<T>> val=std::make_shared<Leaf<T>>(el);
+			nodes.push_back(val);
 		}
 		size_t find(const ptr<Node<T>>& el) const{
 			for (size_t i = 0; i < size(); i++) {

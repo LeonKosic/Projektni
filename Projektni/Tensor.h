@@ -6,8 +6,8 @@ namespace Graph {
 
 	template<typename T,size_t ... args> class Tensor {
 	private:
-		static constexpr size_t num = (args * ...);
 		static constexpr std::vector<size_t> val{ {args...} };
+		static constexpr size_t num = (args * ...);
 		std::array<T, num> arr;
 	public:
 		/*T& operator()(size_t ... argsF) {

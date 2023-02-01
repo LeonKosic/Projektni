@@ -1,7 +1,7 @@
 #pragma once
 #include "ScalarOperation.h"
 namespace Graph {
-	template<typename T> class AddScalar :ScalarOperation<T> {
+	template<typename T> class AddScalar : public ScalarOperation<T> {
 	private:
 	public:
 		AddScalar() :AddOperation<T>([](const T& a, const double& b) {

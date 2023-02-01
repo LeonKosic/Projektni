@@ -2,7 +2,7 @@
 #include "Operation.h"
 #include <functional>
 namespace Graph {
-	template<typename T> class UnaryOperation :Operation<T> {
+	template<typename T> class UnaryOperation : public Operation<T> {
 	private:
 		std::function<T(const T&)> f;
 	public:

@@ -2,7 +2,7 @@
 #include "Operation.h"
 #include <functional>
 namespace Graph {
-	template<typename T> class ScalarOperation :Operation<T> {
+	template<typename T> class ScalarOperation : public Operation<T> {
 	private:
 		std::function<T(const T&, const double&)> f;
 		double scalar;

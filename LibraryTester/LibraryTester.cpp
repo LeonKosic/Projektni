@@ -6,11 +6,27 @@
 #include "Multiply.h"
 #include "Subtract.h"
 #include "Tensor.h"
+typedef std::vector<double> tens;
 int main()
 {
-    std::cout << "Hello World!\n";
     Graph::Tensor<int, 3, 4, 2, 7> tenz;
     tenz[0] = 2;
+    auto dims = tenz.getDimensions();
+    for (auto x : dims)std::cout << x << " ";
+    std::cout << tenz.size();
+    tens t1{ 1,.14,3.23,51,52 };
+    tens t2{ 12,353.14,32.3223,551,523 };
+    tens t3{ 1,23.14,33.223,5431,522 };
+    tens t4{ 5,3,3.3,1,2 };
+    tens t5{ 11,.4,32.63,123,12 };
+    Graph::Graph<tens> g;
+    g.addNode(t1);
+    g.addNode(t2);
+    g.addNode(t3);
+    g.addNode(t4); 
+    g.addNode(t5);
+    
+
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu

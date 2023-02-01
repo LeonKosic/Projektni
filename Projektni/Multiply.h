@@ -1,7 +1,7 @@
 #pragma once
 #include "BinaryOperation.h"
 namespace Graph {
-	template<typename T> class Multiply :BinaryOperation<T> {
+	template<typename T> class Multiply : public BinaryOperation<T> {
 	private:
 	public:
 		Multiply() :BinaryOperation<T>([](const T& a,const T& b) {
