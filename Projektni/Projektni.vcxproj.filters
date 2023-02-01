@@ -51,13 +51,22 @@
     <ClInclude Include="Concepts.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Custom.h">
+    <ClInclude Include="BinaryOperation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CustomUnary.h">
+    <ClInclude Include="UnaryOperation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Addition.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ScalarOperation.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AddScalar.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MultiplyScalar.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

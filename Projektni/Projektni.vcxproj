@@ -141,9 +141,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Addition.h" />
+    <ClInclude Include="AddScalar.h" />
     <ClInclude Include="Concepts.h" />
-    <ClInclude Include="Custom.h" />
-    <ClInclude Include="CustomUnary.h" />
+    <ClInclude Include="BinaryOperation.h" />
+    <ClInclude Include="MultiplyScalar.h" />
+    <ClInclude Include="ScalarOperation.h" />
+    <ClInclude Include="UnaryOperation.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="Graph.h" />
     <ClInclude Include="Inverse.h" />

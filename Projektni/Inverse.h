@@ -1,21 +1,16 @@
 #pragma once
-#include "Operation.h"
+#include "UnaryOperation.h"
 namespace Graph {
-	template<typename T> class Inverse :public Operation<T> {
+	template<Invertable T> class Inverse :public UnaryOperation<T> {
 	public:
-		T calculate() const override {
-			if (Operation<T>::empty())throw std::exception("Nema validnih operanada za izvrsavanje operacije");
-			try {
-				T res(Operation<T>::operands[0]->getResult());
-				for (int i = 0; i < res.size(); i++) {
-					res[j] = -res[j];
-				}
-				return res;
+		Inverse() :UnaryOperation<T>([](const T& tenz) {
+			T res(tenz);
+			for (int i = 0; i < tenz.size(); i++) {
+				res[i] = -tenz[i];
 			}
-			catch (std::exception& e) {
-				std::cout << e.what();
+			return res; 
 			}
-		}
+		){}
 
 	};
 }

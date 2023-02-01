@@ -2,6 +2,12 @@
 #include<iostream>
 #include<fstream>
 #include "Node.h"
+#include "Addition.h"
+#include "Subtract.h"
+#include "Inverse.h"
+#include "Multiply.h"
+#include "AddScalar.h"
+#include "MultiplyScalar.h"
 namespace Graph  {
 	template<Collection T> class Graph {
 	private:
@@ -42,6 +48,12 @@ namespace Graph  {
 		}
 		T getResult(ptr<Node<T>> start) const {
 			return getResult(find(start));
+		}
+		friend std::ostream& operator<<(std::ofstream& ofs, const Graph<T>& a) {
+
+		}
+		friend std::istream& operator>>(std::ifstream& ifs, Graph<T>& a) {
+
 		}
 	};
 	
