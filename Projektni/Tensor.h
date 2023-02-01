@@ -6,9 +6,9 @@ namespace Graph {
 
 	template<typename T,size_t ... args> class Tensor {
 	private:
-		static constexpr size_t size = (args * ...);
+		static constexpr size_t num = (args * ...);
 		static constexpr std::vector<size_t> val{ {args...} };
-		std::array<T, size> arr;
+		std::array<T, num> arr;
 	public:
 		/*T& operator()(size_t ... argsF) {
 			std::vector<size_t> el{ {argsF...} };
@@ -23,8 +23,14 @@ namespace Graph {
 			index += el[el.size() - 1];
 			return arr[index];
 		}*/
+		size_t size() const {
+			return num;
+		}
 		T& operator[](size_t index) {
 			return arr[index];
+		}
+		std::vector<size_t> getDimensions() const {
+			return val;
 		}
 		const T& operator[](size_t index) const {
 			return arr[index];
