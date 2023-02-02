@@ -15,6 +15,8 @@ namespace Graph {
 		virtual void addOperator(const ptr<Node>& el) {
 			operators.push_back(el);
 		}
+		virtual void serialize(std::ofstream& ofs) const = 0;
+		virtual void deserialize(std::ifstream& ifs) = 0;
 	};
 	template<typename T> std::ostream& operator<<(std::ofstream& ofs, const T& a) {
 		for (int i = 0; i < a.size(); i++) {

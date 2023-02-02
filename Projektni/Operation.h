@@ -22,6 +22,12 @@ namespace Graph {
 		virtual T getResult() const override {
 			return calculate();
 		}
+		virtual void serialize(std::ofstream& ofs) const override {
+
+		}
+		virtual void deserialize(std::ifstream& ifs) override {
+
+		}
 	};
 
 }

@@ -14,14 +14,14 @@ namespace Graph  {
 	private:
 		std::vector<ptr<Node<T>> > nodes;
 	public:
-		T& operator[](size_t index) {
+		ptr<Node<T>> operator[](const size_t& index) {
 			if (index >= size())throw std::exception("Index out of bounds");
 			return nodes[index];
 		}
 		size_t size() const {
 			return nodes.size();
 		}
-		const T& operator[](size_t index) const {
+		ptr<const Node<T>> operator[](const size_t& index) const {
 			if (index >= size())throw std::exception("Index out of bounds");
 			return nodes[index];
 		}
@@ -64,5 +64,10 @@ namespace Graph  {
 
 		}
 	};
+	template<typename T> std::ostream& operator<<(std::ostream& os, const T& el) {
+		for (int i = 0; i < el.size(); i++) {
+			os << (*el[i]) << ' ';
+		}
+	}
 	
 }

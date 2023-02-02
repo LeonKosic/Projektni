@@ -4,7 +4,7 @@
 namespace Graph {
 	template<typename T> class ScalarOperation : public Operation<T> {
 	private:
-		std::function<T(const T&, const double&)> f;
+		std::function<T(const T&, const double)> f;
 		double scalar;
 	public:
 		ScalarOperation(decltype(f) val, double scal = 0) :f(val), scalar(scal) {}

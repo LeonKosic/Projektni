@@ -13,6 +13,12 @@ namespace Graph {
 		void setValue(const T& val) {
 			value = val;
 		}
+		virtual void serialize(std::ofstream& ofs) const override {
+			
+		}
+		virtual void deserialize(std::ifstream& ifs) override {
+
+		}
 	};
 
 }

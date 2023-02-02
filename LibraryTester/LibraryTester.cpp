@@ -1,42 +1,61 @@
-// LibraryTester.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
 
 #include <iostream>
 #include "Graph.h"
 #include "Multiply.h"
 #include "Subtract.h"
 #include "Tensor.h"
-typedef std::vector<double> tens;
+using tens = std::vector<double>;
+//using tens = Graph::Tensor<int, 3, 4, 2, 7>;
 int main()
 {
-    Graph::Tensor<int, 3, 4, 2, 7> tenz;
-    tenz[0] = 2;
-    auto dims = tenz.getDimensions();
-    for (auto x : dims)std::cout << x << " ";
-    std::cout << tenz.size();
     tens t1{ 1,.14,3.23,51,52 };
     tens t2{ 12,353.14,32.3223,551,523 };
     tens t3{ 1,23.14,33.223,5431,522 };
     tens t4{ 5,3,3.3,1,2 };
     tens t5{ 11,.4,32.63,123,12 };
     Graph::Graph<tens> g;
-    g.addNode(t1);
-    g.addNode(t2);
-    g.addNode(t3);
-    g.addNode(t4); 
-    g.addNode(t5);
-    Graph::Multiply<tens> mul;
-    g.addNode(std::make_shared<decltype(mul)>(mul));
+    //dodajemo cvorove koji sadrze samo tenzore
+    g.addNode(t1);//0
+    g.addNode(t2);//1
+    g.addNode(t3);//2
+    g.addNode(t4);//3
+    g.addNode(t5);//4
+    //dodajemo operaciju sabiranja
+    Graph::Addition<tens> add;
+    g.addNode(std::make_shared<decltype(add)>(add));//5
     g.addPath(0, 5);
+    g.addPath(1, 5);
+    // dodajemo operaciju mnozenja
+    Graph::Multiply<tens> mul;
+    g.addNode(std::make_shared<decltype(mul)>(mul));//6
+    g.addPath(2, 6);
+    g.addPath(3, 6);
+    //dodajemo operaciju invertovanja
+    Graph::Inverse<tens> inv;
+    g.addNode(std::make_shared<decltype(inv)>(inv));//7
+    g.addPath(4, 7);
+    //dodajemo operaciju oduzimanja
+    Graph::Subtract<tens> sub;
+    g.addNode(std::make_shared<decltype(sub)>(sub));//8
+    g.addPath(6, 8);
+    g.addPath(5, 8);
+    //dodajemo operaciju sabiranja skalarom
+    Graph::AddScalar<tens> addS(2.25);
+    g.addNode(std::make_shared<decltype(addS)>(addS));//9
+    g.addPath(7, 9);
+    //dodajemo operaciju mnozenja skalarom
+    Graph::MultiplyScalar<tens> mulS(1.25);
+    g.addNode(std::make_shared<decltype(mulS)>(mulS));//10
+    g.addPath(8, 10);
+    //dodajemo sabiranje zadnja dva cvora
+    Graph::Addition<tens> addF;
+    g.addNode(std::make_shared<decltype(addF)>(addF));//11
+    g.addPath(9, 11);
+    g.addPath(10, 11);
+    auto a= g[11]->getResult();
+    for (auto x : a) {
+        std::cout << x << ' ';
+    }
 }
 
-// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
-// Debug program: F5 or Debug > Start Debugging menu
 
-// Tips for Getting Started: 
-//   1. Use the Solution Explorer window to add/manage files
-//   2. Use the Team Explorer window to connect to source control
-//   3. Use the Output window to see build output and other messages
-//   4. Use the Error List window to view errors
-//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
-//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file
