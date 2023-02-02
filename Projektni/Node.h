@@ -15,17 +15,16 @@ namespace Graph {
 		virtual void addOperator(const ptr<Node>& el) {
 			operators.push_back(el);
 		}
-		virtual void serialize(std::ofstream& ofs) const = 0;
+		virtual void serialize(std::ofstream& ofs) const{
+		};
 		virtual void deserialize(std::ifstream& ifs) = 0;
+		friend std::ostream& operator<<(std::ofstream& ofs, const Node<T>& a) {
+			ofs << typeid(a).raw_name();
+			return ofs;
+		}
+		friend std::ostream& operator<<(std::ostream& os, const Node<T>& a) {
+			os << typeid(a).name() << '\n';
+			return os;
+		}
 	};
-	template<typename T> std::ostream& operator<<(std::ofstream& ofs, const T& a) {
-		for (int i = 0; i < a.size(); i++) {
-			ofs << a[i] << ' ';
-		}
-	}
-	template<typename T> std::istream& operator>>(std::ifstream& ofs, T& a) {
-		for (int i = 0; i < a.size(); i++) {
-			ofs >> a[i]; //TODO : concepts da bi radilo
-		}
-	}
 }

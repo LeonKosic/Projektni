@@ -13,7 +13,7 @@ namespace Graph {
 				return f(Operation<T>::operands[0]->getResult());
 			}
 			catch (std::exception& e) {
-				std::cout << e.what();
+				throw(e);
 			}
 		}
 	};

@@ -17,7 +17,7 @@ namespace Graph {
 				return res;
 			}
 			catch (std::exception& e) {
-				std::cout << e.what();
+				throw(e);
 			}
 		}
 	};

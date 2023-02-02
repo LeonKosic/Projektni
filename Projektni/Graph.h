@@ -1,5 +1,6 @@
 #pragma once
 #include<iostream>
+#include<string>
 #include<fstream>
 #include "Node.h"
 #include "Addition.h"
@@ -9,10 +10,12 @@
 #include "AddScalar.h"
 #include "MultiplyScalar.h"
 #include "Leaf.h"
+
 namespace Graph  {
 	template<Collection T> class Graph {
 	private:
 		std::vector<ptr<Node<T>> > nodes;
+		
 	public:
 		ptr<Node<T>> operator[](const size_t& index) {
 			if (index >= size())throw std::exception("Index out of bounds");
@@ -44,8 +47,11 @@ namespace Graph  {
 		void addPath(size_t from, size_t to) {
 			nodes[to]->add(nodes[from]);
 			/*
-			* pretpostavlja se da korisnik povezuje vezu OD tensora DO operacije, 
-			* u klasi sam obrnuto implementirao zbog laksih operacija
+			* pretpostavlja se da korisnik povezuje vezu OD tensora DO operacije, tj od operacije do operacije koja zavisi od te operacije, 
+			* u klasi sam obrnuto implementirao zbog laksih operacija izracunavanja
+			* ako hocu da cuvam i vezu do i vezu od kao dva odvojena vektora
+			* moram slati this pointer kao std::shared_ptr pa mi mora Node<T> inherit std::enable_shared_from_this<Node<T>>
+			* klasu a i rizikujem circular dependency? samo mi je lakse ovako
 			*/
 		}
 		void addPath(ptr<Node<T>> from, ptr<Node<T>> to) {
@@ -58,16 +64,97 @@ namespace Graph  {
 			return getResult(find(start));
 		}
 		friend std::ostream& operator<<(std::ofstream& ofs, const Graph<T>& a) {
+			for (int i = 0; i < a.nodes.size(); i++) {
+				ofs << *(a.nodes[i]) << ',';
+			}
+			ofs << '#';//razdvaja nodes i paths
+			/*for (int i = 0; i < a.nodes.size(); i++) {
+				for (int j = 0; j < a.nodes[i].size(); j++) {
 
+				}
+			}*/
+			return ofs;
+		}
+		friend std::ostream& operator<<(std::ostream& os, const Graph<T>& a) {
+			for (int i = 0; i < a.nodes.size(); i++) {
+				os << *(a.nodes[i]) << ',';
+			}
+			return os;
 		}
 		friend std::istream& operator>>(std::ifstream& ifs, Graph<T>& a) {
-
+			char delim = ',';
+			std::string type;
+			while (std::getline(ifs, type, delim)) {
+				ptr<Node<T>> temp;
+				if (type == typeid(Addition<T>).raw_name()) {
+					temp =std::make_shared<Addition<T>>();
+				}else if (type == typeid(Multiply<T>).raw_name()) {
+					temp =std::make_shared<Multiply<T>>();
+				}else if (type == typeid(Subtract<T>).raw_name()) {
+					temp =std::make_shared<Subtract<T>>();
+				}else if (type == typeid(MultiplyScalar<T>).raw_name()) {
+					temp =std::make_shared<MultiplyScalar<T>>();
+				}else if (type == typeid(AddScalar<T>).raw_name()) {
+					temp =std::make_shared<AddScalar<T>>();
+				}else if (type == typeid(Inverse<T>).raw_name()) {
+					temp =std::make_shared<Inverse<T>>();
+				}else if (type == typeid(BinaryOperation<T>).raw_name()) {
+					temp = std::make_shared<BinaryOperation<T>>([](const T& a, const T& b) {
+						T res(a);
+					for (int i = 0; i < res.size(); i++) {
+						res[i] = a[i] + b[i];
+					}
+					return res;
+						});
+				}else if (type == typeid(UnaryOperation<T>).raw_name()) {
+					temp =std::make_shared<UnaryOperation<T>>([](const T& tenz) {
+						T res(tenz);
+					for (int i = 0; i < tenz.size(); i++) {
+						res[i] = -tenz[i];
+					}
+					return res;
+						});
+				}else if (type == typeid(ScalarOperation<T>).raw_name()) {
+					temp =std::make_shared<ScalarOperation<T>>([](const T& a, const double b) {
+						T res(a);
+					for (int i = 0; i < res.size(); i++) {
+						res[i] = a[i] + b;
+					}
+					return res;
+						});
+				}else if (type == typeid(Leaf<T>).raw_name()) {
+					//std::cout << "Tensor\n";
+					continue;
+					T val;
+					inputElements(T,)
+					//ifs >> val;
+					//temp = std::make_shared<Leaf<T>>(val);
+					
+				}else {
+					continue;
+					throw std::exception("Invalid Node Type");
+					//std::cout << "AAAAA";
+				}	
+				a.addNode(temp);
+			}
+			return ifs;
 		}
 	};
-	template<typename T> std::ostream& operator<<(std::ostream& os, const T& el) {
-		for (int i = 0; i < el.size(); i++) {
-			os << (*el[i]) << ' ';
-		}
+	template<Collection T> void inputElements(T& arr, std::stringstream& ss) {
+		arr.push_back()
 	}
-	
 }
+/*
+		char delim = ',';
+		std::string type;
+		std::getline(ifs, type, delim);
+		std::string raw_name = typeid(rhs).raw_name();
+		if (type != raw_name)
+			throw std::invalid_argument("Wrong type name during deserialization");
+		std::getline(ifs, rhs.id, delim);
+		std::getline(ifs, rhs.name, delim);
+		ifs >> rhs.age;
+		// ignore next delimiter ('\n')
+		ifs.ignore();
+		return ifs;
+*/

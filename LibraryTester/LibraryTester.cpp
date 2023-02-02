@@ -6,14 +6,12 @@
 #include "Tensor.h"
 using tens = std::vector<double>;
 //using tens = Graph::Tensor<int, 3, 4, 2, 7>;
-int main()
-{
+void fillGraph(Graph::Graph<tens>& g){
     tens t1{ 1,.14,3.23,51,52 };
     tens t2{ 12,353.14,32.3223,551,523 };
     tens t3{ 1,23.14,33.223,5431,522 };
     tens t4{ 5,3,3.3,1,2 };
     tens t5{ 11,.4,32.63,123,12 };
-    Graph::Graph<tens> g;
     //dodajemo cvorove koji sadrze samo tenzore
     g.addNode(t1);//0
     g.addNode(t2);//1
@@ -52,10 +50,36 @@ int main()
     g.addNode(std::make_shared<decltype(addF)>(addF));//11
     g.addPath(9, 11);
     g.addPath(10, 11);
-    auto a= g[11]->getResult();
-    for (auto x : a) {
+}
+void printNodeResult(Graph::Graph<tens>& g,int ind) {
+    auto a = g[ind]->getResult();
+    for (const auto& x : a) {
         std::cout << x << ' ';
     }
+    std::cout << '\n';
+}
+void testGraphSerialization(const Graph::Graph<tens>& g,std::string name)
+{
+    std::ofstream ofs = std::ofstream(name);
+    ofs << g;
+    ofs.close();
+}
+void testGraphDeserialization(std::string name) {
+    Graph::Graph<tens> g;
+    std::ifstream ifs = std::ifstream(name);
+    ifs >> g;
+    ifs.close();
+    std::cout << g;
+}
+int main()
+{
+    Graph::Graph<tens> g;
+    fillGraph(g);
+    printNodeResult(g, 11);
+    std::string file = "graph.txt";
+    testGraphSerialization(g,file);
+    testGraphDeserialization(file);
+    //std::cout << g;
 }
 
 

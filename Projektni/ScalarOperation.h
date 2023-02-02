@@ -14,11 +14,14 @@ namespace Graph {
 				return f(Operation<T>::operands[0]->getResult(), scalar);
 			}
 			catch (std::exception& e) {
-				std::cout << e.what();
+				throw(e);
 			}
 		}
 		void setScalar(const double& scal) {
 			scalar = scal;
+		}
+		double getScalar() const {
+			return scalar;
 		}
 	};
 }
