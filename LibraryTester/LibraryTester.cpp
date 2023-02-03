@@ -5,12 +5,11 @@
 #include "Subtract.h"
 #include "Tensor.h"
 using tens = std::vector<double>;
-//using tens = Graph::Tensor<int, 3, 4, 2, 7>;
 void fillGraph(Graph::Graph<tens>& g){
     tens t1{ 1,.14,3.23,51,52 };
     tens t2{ 12,353.14,32.3223,551,523 };
     tens t3{ 1,23.14,33.223,5431,522 };
-    tens t4{ 5,3,3.3,1,2 };
+    tens t4{ 5.12,1.232,33.3,51,24 };
     tens t5{ 11,.4,32.63,123,12 };
     //dodajemo cvorove koji sadrze samo tenzore
     g.addNode(t1);//0
@@ -75,11 +74,12 @@ int main()
 {
     Graph::Graph<tens> g;
     fillGraph(g);
-    printNodeResult(g, 11);
+    //printNodeResult(g, 11);
     std::string file = "graph.txt";
     testGraphSerialization(g,file);
     testGraphDeserialization(file);
-    //std::cout << g;
+   // std::cout << g;
+    //g.printJacobian();
 }
 
 

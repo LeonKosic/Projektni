@@ -12,5 +12,21 @@ namespace Graph {
 		return res;
 			}
 			) {}
+		
+		virtual T derValue(size_t size, size_t opInd)  override {
+			T res = Operation<T>::operands[0]->getResult();
+			for (auto& x : res) {
+				x = 1;
+			}
+			
+			for (size_t i = 0; i < Operation<T>::size(); i++) {
+				if (i == opInd)continue;
+				auto val = Operation<T>::operands[i]->getResult();
+				for (size_t j = 0; j < val.size(); j++) {
+					res[j] *= val[j];
+				}
+			}
+			return res;
+		}
 	};
 }

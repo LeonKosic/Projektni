@@ -11,6 +11,8 @@ namespace Graph {
 			return res; 
 			}
 		){}
-
+		virtual T derValue(size_t size, size_t opInd) override {
+			return T(size, -1);
+		}
 	};
 }

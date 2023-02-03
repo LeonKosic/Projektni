@@ -2,6 +2,7 @@
 #include<iostream>
 #include<string>
 #include<fstream>
+#include<utility>
 #include "Node.h"
 #include "Addition.h"
 #include "Subtract.h"
@@ -15,8 +16,40 @@ namespace Graph  {
 	template<Collection T> class Graph {
 	private:
 		std::vector<ptr<Node<T>> > nodes;
-		
+		std::vector<std::pair<size_t, size_t> > paths;
 	public:
+		std::vector<std::vector<T>> Jacobian() {
+			std::vector< std::vector<T> > jacobMat;
+			std::vector<bool> isTensor(nodes.size(), false);
+			for (int i = 0; i < nodes.size(); i++) {
+				if (typeid(*nodes[i]).raw_name() == typeid(Leaf<T>).raw_name())isTensor[i] = true;
+			}
+			for (int i = 0; i < nodes.size(); i++) {
+				if (!isTensor[i])continue;
+				jacobMat.push_back(std::vector<T>());
+				for (int j = 0; j < nodes.size(); j++) {
+					if (isTensor[j])continue;
+					//jacobMat[i].push_back(nodes[j]->getResult());
+					jacobMat[i].push_back(nodes[j]->derivative(nodes[i]));
+				}
+			}
+			return jacobMat;
+		}
+		void printJacobian() {
+			auto arr = Jacobian();
+			for (int i = 0; i < arr.size(); i++) {
+				std::cout << i + 1 << " : \n";
+				for (int j = 0; j < arr[i].size(); j++) {
+					for (int k = 0; k < arr[i][j].size(); k++) {
+						std::cout << arr[i][j][k] << ' ';
+					}
+					std::cout << std::endl;
+				}
+			}
+		}
+		void print() {
+			for (int i = 0; i < nodes.size(); i++)std::cout << typeid(*nodes[i]).name() << std::endl;
+		}
 		ptr<Node<T>> operator[](const size_t& index) {
 			if (index >= size())throw std::exception("Index out of bounds");
 			return nodes[index];
@@ -46,6 +79,7 @@ namespace Graph  {
 		}
 		void addPath(size_t from, size_t to) {
 			nodes[to]->add(nodes[from]);
+			paths.push_back({ to,from });
 			/*
 			* pretpostavlja se da korisnik povezuje vezu OD tensora DO operacije, tj od operacije do operacije koja zavisi od te operacije, 
 			* u klasi sam obrnuto implementirao zbog laksih operacija izracunavanja
@@ -65,26 +99,28 @@ namespace Graph  {
 		}
 		friend std::ostream& operator<<(std::ofstream& ofs, const Graph<T>& a) {
 			for (int i = 0; i < a.nodes.size(); i++) {
-				ofs << *(a.nodes[i]) << ',';
+				ofs << *(a.nodes[i]);
 			}
-			ofs << '#';//razdvaja nodes i paths
-			/*for (int i = 0; i < a.nodes.size(); i++) {
-				for (int j = 0; j < a.nodes[i].size(); j++) {
-
-				}
-			}*/
+			ofs << "addPaths#\n";//razdvaja nodes i paths
+			for (const auto& x : a.paths) {
+				ofs << x.first << ' ' << x.second << '\n';
+			}
 			return ofs;
 		}
 		friend std::ostream& operator<<(std::ostream& os, const Graph<T>& a) {
 			for (int i = 0; i < a.nodes.size(); i++) {
-				os << *(a.nodes[i]) << ',';
+				os << *(a.nodes[i]);
+			}
+			for (const auto& x : a.paths) {
+				os << x.first << ' ' << x.second << std::endl;
 			}
 			return os;
 		}
 		friend std::istream& operator>>(std::ifstream& ifs, Graph<T>& a) {
-			char delim = ',';
+			char delim = '#';
 			std::string type;
-			while (std::getline(ifs, type, delim)) {
+			while (std::getline(ifs, type, delim)&&type!="addPaths") {
+			//	std::cout << type << std::endl;
 				ptr<Node<T>> temp;
 				if (type == typeid(Addition<T>).raw_name()) {
 					temp =std::make_shared<Addition<T>>();
@@ -123,38 +159,28 @@ namespace Graph  {
 					return res;
 						});
 				}else if (type == typeid(Leaf<T>).raw_name()) {
-					//std::cout << "Tensor\n";
-					continue;
-					T val;
-					inputElements(T,)
-					//ifs >> val;
-					//temp = std::make_shared<Leaf<T>>(val);
-					
-				}else {
-					continue;
+					temp = std::make_shared<Leaf<T>>();
+					//std::string str;
+				//	std::getline(ifs, str, delim);
+				//	std::stringstream ss(str);
+					temp->deserialize(ifs);
+				}else if(type.length()>3){
+					//std::cout << type;
 					throw std::exception("Invalid Node Type");
 					//std::cout << "AAAAA";
-				}	
+				}
+				else {
+					continue;
+				}
+			//	std::cout << "A";
 				a.addNode(temp);
+			}
+			//std::cout << "TYPE: "<<type << std::endl;
+			size_t b, c;
+			while (ifs >> b >> c) {
+				a.addPath(b, c);
 			}
 			return ifs;
 		}
 	};
-	template<Collection T> void inputElements(T& arr, std::stringstream& ss) {
-		arr.push_back()
-	}
 }
-/*
-		char delim = ',';
-		std::string type;
-		std::getline(ifs, type, delim);
-		std::string raw_name = typeid(rhs).raw_name();
-		if (type != raw_name)
-			throw std::invalid_argument("Wrong type name during deserialization");
-		std::getline(ifs, rhs.id, delim);
-		std::getline(ifs, rhs.name, delim);
-		ifs >> rhs.age;
-		// ignore next delimiter ('\n')
-		ifs.ignore();
-		return ifs;
-*/

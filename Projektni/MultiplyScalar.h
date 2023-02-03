@@ -12,5 +12,11 @@ namespace Graph {
 		return res;
 			}
 			, scalar) {}
+		virtual T derValue(size_t size, size_t opInd) override {
+			/*double scale = ScalarOperation<T>::getScalar();
+			auto val = Operation<T>::operands[0];
+			for (auto& x : val)x = scale;*/
+			return T(size, ScalarOperation<T>::getScalar());
+		}
 	};
 }
